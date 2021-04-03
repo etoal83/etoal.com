@@ -1,8 +1,8 @@
 [package]
 version = "0.1.0"
-name = "{{project-name}}"
+name = "etoal_com"
 repository = "https://github.com/seed-rs/seed-quickstart"
-authors = ["{{authors}}"]
+authors = ["EtoAl"]
 description = "App Description"
 categories = ["category"]
 license = "MIT"
