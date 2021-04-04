@@ -1,0 +1,49 @@
+{
+  "_code": "Ok",
+  "file_id": "r86ppeXjS2JYyluCJBlhJ26-",
+  "title": "Simplest Sample",
+  "nodes": [
+    {
+      "id": "root",
+      "content": "Simplest Sample",
+      "note": "",
+      "children": [
+        "NTSRqBlBj0C4zHlE06AvlgPY",
+        "VTljJFnoL2Xb9sOX-7soMEUa",
+        "nJy2T1QhKY_yhOqjsfMiM0Pf",
+        "fMUjcExqbWp28z0ohXUGfTna"
+      ],
+      "created": 1617517140183,
+      "modified": 1617517382828
+    },
+    {
+      "id": "NTSRqBlBj0C4zHlE06AvlgPY",
+      "content": "An outline generated from Dynalist",
+      "note": "",
+      "created": 1617517150194,
+      "modified": 1617517321637
+    },
+    {
+      "id": "VTljJFnoL2Xb9sOX-7soMEUa",
+      "content": "No indent",
+      "note": "",
+      "created": 1617517196980,
+      "modified": 1617517501595
+    },
+    {
+      "id": "fMUjcExqbWp28z0ohXUGfTna",
+      "content": "Single-byte characters only",
+      "note": "",
+      "created": 1617517249247,
+      "modified": 1617517321637
+    },
+    {
+      "id": "nJy2T1QhKY_yhOqjsfMiM0Pf",
+      "content": "No formatting nor functions",
+      "note": "",
+      "created": 1617517436002,
+      "modified": 1617517481612
+    }
+  ],
+  "version": 12
+}
