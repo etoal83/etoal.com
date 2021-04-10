@@ -32,7 +32,7 @@ jobs:
         run: cargo install wasm-bindgen-cli --version 0.2.73
 
       - name: Build app
-        run: cargo make build_release
+        run: cargo make build
 
       - name: Install Netlify CLI
         if: github.ref == 'refs/heads/main'
