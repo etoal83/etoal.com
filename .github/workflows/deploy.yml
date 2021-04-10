@@ -1,0 +1,48 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install Js dependencies
+        run: yarn
+
+      - name: Install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          target: wasm32-unknown-unknown
+
+      - name: Install cargo-make
+        uses: davidB/rust-cargo-make@v1
+
+      - name: Install wasm-bindgen-cli
+        run: cargo install wasm-bindgen-cli --version 0.2.73
+
+      - name: Build app
+        run: cargo make build_release
+
+      - name: Install Netlify CLI
+        if: github.ref == 'refs/heads/main'
+        run: |
+          yarn global add --unsafe-perm=true netlify-cli
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN -p --dir ./dist
