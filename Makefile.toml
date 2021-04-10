@@ -1,5 +1,5 @@
 [env]
-PORT = "9000"
+PORT = "9090"
 
 [config]
 skip_core_tasks = true
@@ -8,16 +8,15 @@ skip_core_tasks = true
 
 [tasks.watch]
 description = "Watch files and recompile the project on change"
-run_task = [
-    { name = "build" },
-]
-watch = true
+dependencies = ["install-trunk", "install-wasm-bindgen-cli"]
+command = "trunk"
+args = ["watch"]
 
 [tasks.serve]
 description = "Start server"
-install_crate = { crate_name = "microserver", binary = "microserver", test_arg = "-h" }
-command = "microserver"
-args = ["--port", "${PORT}"]
+dependencies = ["install-trunk", "install-wasm-bindgen-cli"]
+command = "trunk"
+args = ["serve", "--port", "${PORT}"]
 
 [tasks.verify]
 description = "Format, lint with Clippy and run tests"
@@ -26,16 +25,24 @@ dependencies = ["fmt", "clippy", "test_h_firefox"]
 # ---- BUILD ----
 
 [tasks.build]
-description = "Build with wasm-pack"
-install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = "-V" }
-command = "wasm-pack"
-args = ["build", "--target", "web", "--out-name", "package", "--dev"]
+description = "Build with trunk"
+dependencies = ["install-trunk", "install-wasm-bindgen-cli"]
+command = "trunk"
+args = ["build"]
 
 [tasks.build_release]
-description = "Build with wasm-pack in release mode"
-install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = "-V" }
-command = "wasm-pack"
-args = ["build", "--target", "web", "--out-name", "package"]
+description = "Build with trunk in release mode"
+dependencies = ["install-trunk", "install-wasm-bindgen-cli"]
+command = "trunk"
+args = ["build", "--release"]
+
+# ---- INSTALL ----
+
+[tasks.install-trunk]
+install_crate = { crate_name = "trunk", binary = "trunk", test_arg = "--help"}
+
+[tasks.install-wasm-bindgen-cli]
+install_crate = { crate_name = "wasm-bindgen-cli", binary = "wasm-bindgen", test_arg = "--help"}
 
 # ---- LINT ----
 
