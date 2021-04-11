@@ -3,7 +3,9 @@
 // but some rules are too "annoying" or are not applicable for your case.)
 #![allow(clippy::wildcard_imports)]
 
+use std::fmt;
 use seed::{prelude::*, *};
+use serde::{Serialize, Deserialize};
 
 // ------ ------
 //     Init
@@ -20,6 +22,38 @@ fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
 
 // `Model` describes our app state.
 type Model = i32;
+
+#[derive(Serialize, Deserialize, Debug)]
+struct DynalistDocumentApiResponse {
+    _code: String,
+    _msg: Option<String>,
+    file_id: String,
+    title: String,
+    nodes: Vec<DynalistNode>,
+    version: i32,
+}
+
+impl fmt::Display for DynalistDocumentApiResponse {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "file_id: {}, title: {}", self.file_id, self.title)
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct DynalistNode {
+    id: String,
+    content: String,
+    note: String,
+    children: Option<Vec<String>>,
+    created: i64,
+    modified: i64,
+}
+
+impl fmt::Display for DynalistNode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "id: {}, content: {}", self.id, self.content)
+    }
+}
 
 // ------ ------
 //    Update
