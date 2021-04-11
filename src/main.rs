@@ -85,7 +85,22 @@ fn view(model: &Model) -> Node<Msg> {
         "This is a counter: ",
         C!["counter"],
         button![model, ev(Ev::Click, |_| Msg::Increment),],
+        dynalist_document(),
     ]
+}
+
+fn dynalist_document() -> Node<Msg> {
+    section![
+        read_sample_json(),
+    ]
+}
+
+fn read_sample_json() -> String {
+    let json_str = include_str!("../json/simplest_sample.json");
+    let api_resp: DynalistDocumentApiResponse = serde_json::from_str(json_str).expect("Deserialization failed");
+    let doc = format!("{}", api_resp);
+
+    doc
 }
 
 // ------ ------
