@@ -80,11 +80,26 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 // (Remove the line below once your `Model` become more complex.)
 #[allow(clippy::trivially_copy_pass_by_ref)]
 // `view` describes what to display.
-fn view(model: &Model) -> Node<Msg> {
-    div![
-        "This is a counter: ",
-        C!["counter"],
-        button![model, ev(Ev::Click, |_| Msg::Increment),],
+fn view(model: &Model) -> Vec<Node<Msg>> {
+    vec![
+        div![
+            C!["title"],
+            h1!["EtoAl.com"],
+        ],
+        div![
+            C!["contents"],
+            ul![
+                li!["Home"],
+                li!["About"],
+                li!["Scrolls"],
+                li!["Fragments"],
+            ],
+        ],
+        div![
+            "Counter sample: ",
+            C!["counter"],
+            button![model, ev(Ev::Click, |_| Msg::Increment),],
+        ],
         dynalist_document(),
     ]
 }
