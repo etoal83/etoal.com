@@ -16,6 +16,7 @@ const ABOUT: &str = "about";
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
     orders.subscribe(Msg::UrlChanged);
     Model {
+        base_url: url.to_base_url(),
         page: Page::init(url),
     }
 }
@@ -26,6 +27,7 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
 // ------ ------
 
 struct Model {
+    base_url: Url,
     page: Page,
 }
 
@@ -88,19 +90,35 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 #[allow(clippy::trivially_copy_pass_by_ref)]
 fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
+        header(&model.base_url),
         match &model.page {
             Page::Home => div![
                 C!["page-home"],
-                h1!["EtoAl.com"],
                 "I'm Home."
             ],
             Page::About => div![
                 C!["page-about"],
-                h1!["EtoAl.com"],
                 "About me."
             ],
             Page::NotFound => div!["404"],
         },
+    ]
+}
+
+fn header(base_url: &Url) -> Node<Msg> {
+    div![
+        C!["header"],
+        h1!["EtoAl.com"],
+        ul![
+            li![a![
+                attrs! { At::Href => Urls::new(base_url).home() },
+                "Home",
+            ]],
+            li![a![
+                attrs! { At::Href => Urls::new(base_url).about() },
+                "About",
+            ]],
+        ],
     ]
 }
 
