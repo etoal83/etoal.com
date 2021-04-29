@@ -3,75 +3,82 @@
 // but some rules are too "annoying" or are not applicable for your case.)
 #![allow(clippy::wildcard_imports)]
 
-use std::fmt;
 use seed::{prelude::*, *};
-use serde::{Serialize, Deserialize};
+// use std::fmt;
+// use serde::{Serialize, Deserialize};
+
+const ABOUT: &str = "about";
 
 // ------ ------
 //     Init
 // ------ ------
 
-// `init` describes what should happen when your app started.
-fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
-    Model::default()
+fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+    orders.subscribe(Msg::UrlChanged);
+    Model {
+        page: Page::init(url),
+    }
 }
+
 
 // ------ ------
 //     Model
 // ------ ------
 
-// `Model` describes our app state.
-type Model = i32;
-
-#[derive(Serialize, Deserialize, Debug)]
-struct DynalistDocumentApiResponse {
-    _code: String,
-    _msg: Option<String>,
-    file_id: String,
-    title: String,
-    nodes: Vec<DynalistNode>,
-    version: i32,
+struct Model {
+    page: Page,
 }
 
-impl fmt::Display for DynalistDocumentApiResponse {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "file_id: {}, title: {}", self.file_id, self.title)
+// ------ Page ------
+
+enum Page {
+    Home,
+    About,
+    NotFound,
+}
+
+impl Page {
+    fn init(mut url: Url) -> Self {
+        match url.next_path_part() {
+            None => Self::Home,
+            Some(ABOUT) => Self::About,
+            Some(_) => Self::NotFound,
+        }
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-struct DynalistNode {
-    id: String,
-    content: String,
-    note: String,
-    children: Option<Vec<String>>,
-    created: i64,
-    modified: i64,
-}
 
-impl fmt::Display for DynalistNode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "id: {}, content: {}", self.id, self.content)
+// ------ ------
+//     Urls
+// ------ ------
+
+struct_urls!();
+impl<'a> Urls<'a> {
+    pub fn home(self) -> Url {
+        self.base_url()
+    }
+    pub fn about(self) -> Url {
+        self.base_url().add_path_part(ABOUT)
     }
 }
+
 
 // ------ ------
 //    Update
 // ------ ------
 
-// (Remove the line below once any of your `Msg` variants doesn't implement `Copy`.)
-#[derive(Copy, Clone)]
-// `Msg` describes the different events you can modify state with.
 enum Msg {
-    Increment,
+    UrlChanged(subs::UrlChanged),
 }
 
-// `update` describes how to handle each `Msg`.
 fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
     match msg {
-        Msg::Increment => *model += 1,
+        Msg::UrlChanged(subs::UrlChanged(url)) => {
+            model.page = Page::init(url);
+        },
     }
 }
+
 
 // ------ ------
 //     View
@@ -79,50 +86,29 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 
 // (Remove the line below once your `Model` become more complex.)
 #[allow(clippy::trivially_copy_pass_by_ref)]
-// `view` describes what to display.
-fn view(model: &Model) -> Vec<Node<Msg>> {
+fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
-        div![
-            C!["title"],
-            h1!["EtoAl.com"],
-        ],
-        div![
-            C!["contents"],
-            ul![
-                li!["Home"],
-                li!["About"],
-                li!["Scrolls"],
-                li!["Fragments"],
+        match &model.page {
+            Page::Home => div![
+                C!["page-home"],
+                h1!["EtoAl.com"],
+                "I'm Home."
             ],
-        ],
-        div![
-            "Counter sample: ",
-            C!["counter"],
-            button![model, ev(Ev::Click, |_| Msg::Increment),],
-        ],
-        dynalist_document(),
+            Page::About => div![
+                C!["page-about"],
+                h1!["EtoAl.com"],
+                "About me."
+            ],
+            Page::NotFound => div!["404"],
+        },
     ]
 }
 
-fn dynalist_document() -> Node<Msg> {
-    section![
-        read_sample_json(),
-    ]
-}
-
-fn read_sample_json() -> String {
-    let json_str = include_str!("../json/simplest_sample.json");
-    let api_resp: DynalistDocumentApiResponse = serde_json::from_str(json_str).expect("Deserialization failed");
-    let doc = format!("{}", api_resp);
-
-    doc
-}
 
 // ------ ------
 //     Start
 // ------ ------
 
 pub fn main() {
-    // Mount the `app` to the element with the `id` "app".
     App::start("app", init, update, view);
 }
