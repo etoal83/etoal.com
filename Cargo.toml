@@ -13,7 +13,7 @@ edition = "2018"
 wasm-bindgen-test = "0.3.18"
 
 [dependencies]
-seed = "0.8.0"
+seed = { git = "https://github.com/seed-rs/seed", branch = "master" }
 seed_styles = { git = "https://github.com/seed-rs/styles_hooks", package = "seed_styles", branch = "main" }
 seed_hooks = { git = "https://github.com/seed-rs/styles_hooks", package = "seed_hooks", branch = "main" }
 chrono = "0.4"
