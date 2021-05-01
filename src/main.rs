@@ -19,12 +19,12 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         .style(
             "a,ul,li,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
             s().font_family("'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif")
-                .color(rgb(173, 186, 199))
+                .color(rgb(217, 217, 217))
                 .webkit_font_smoothing_antialiased(),
         )
         .style("img", s().box_sizing_content_box())
         .style("*, *:before, *:after", s().box_sizing("inherit"))
-        .style("body", s().background_color(rgb(34, 39, 46)))
+        .style("body", s().background_color(rgb(0, 0, 0)))
         .activate_styles();
 
     orders.subscribe(Msg::UrlChanged);
