@@ -4,6 +4,7 @@
 #![allow(clippy::wildcard_imports)]
 
 use seed::{prelude::*, *};
+use seed_styles::*;
 // use std::fmt;
 // use serde::{Serialize, Deserialize};
 
@@ -14,6 +15,18 @@ const ABOUT: &str = "about";
 // ------ ------
 
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+    GlobalStyle::default()
+        .style(
+            "a,ul,li,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
+            s().font_family("'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif")
+                .color(rgb(173, 186, 199))
+                .webkit_font_smoothing_antialiased(),
+        )
+        .style("img", s().box_sizing_content_box())
+        .style("*, *:before, *:after", s().box_sizing("inherit"))
+        .style("body", s().background_color(rgb(34, 39, 46)))
+        .activate_styles();
+
     orders.subscribe(Msg::UrlChanged);
     Model {
         base_url: url.to_base_url(),
