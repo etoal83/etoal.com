@@ -105,12 +105,10 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
         header(&model.base_url),
         match &model.page {
-            Page::Home => div![
-                C!["page-home"],
-                "I'm Home."
+            Page::Home => div![C!["page-home"],
+                "I'm Home.",
             ],
-            Page::About => div![
-                C!["page-about"],
+            Page::About => div![C!["page-about"],
                 "About me."
             ],
             Page::NotFound => div!["404"],
