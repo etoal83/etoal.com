@@ -182,9 +182,9 @@ fn dice_surface(id: i32) -> Node<Msg> {
         1 => ("H", base_style.clone().transform("translateZ(85px)")),
         2 => ("E", base_style.clone().transform("translateY(85px) rotateX(270deg)")),
         3 => ("L", base_style.clone().transform("translateX(85px) rotateX(180deg) rotateY(90deg)")),
-        4 => ("💚", base_style.clone().transform("translateX(-85px) rotateX(180deg) rotateY(-90deg)")),
+        4 => ("💚", base_style.clone().font_size(rem(5)).transform("translateX(-85px) rotateX(180deg) rotateY(-90deg)")),
         5 => ("L", base_style.clone().transform("translateY(-85px) rotateY(180deg) rotateX(90deg)")),
-        6 => ("O", base_style.clone().font_size(rem(5)).transform("translateZ(-85px) rotateY(180deg)")),
+        6 => ("O", base_style.clone().transform("translateZ(-85px) rotateY(180deg)")),
         _ => ("_", base_style),
     };
     li![
