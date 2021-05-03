@@ -114,7 +114,7 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
             ],
             Page::NotFound => div!["404"],
         },
-        hello_dice(),
+        hello_cube(),
     ]
 }
 
@@ -135,35 +135,35 @@ fn header(base_url: &Url) -> Node<Msg> {
     ]
 }
 
-fn hello_dice() -> Node<Msg> {
-    div![C!["dice-container"],
+fn hello_cube() -> Node<Msg> {
+    div![C!["cube-container"],
         s().position_absolute()
             .top("50%")
             .left("50%")
             .perspective("500px")
         ,
-        div![C!["dice"],
+        div![C!["cube"],
             s().transform_style("preserve-3d")
                 .animation("10000ms linear infinite")
                 .keyframe(0, s().transform("rotateX(0deg) rotateY(0deg)"))
                 .keyframe(100, s().transform("rotateX(720deg) rotateY(360deg)"))
             ,
-            ol![C!["dice-list"],
+            ol![C!["cube-list"],
                 s().transform_style("preserve-3d")
                     .transform("translateY(-85px) translateX(-85px)")
                 ,
-                dice_surface(1),
-                dice_surface(2),
-                dice_surface(3),
-                dice_surface(4),
-                dice_surface(5),
-                dice_surface(6),
+                cube_surface(1),
+                cube_surface(2),
+                cube_surface(3),
+                cube_surface(4),
+                cube_surface(5),
+                cube_surface(6),
             ],
         ],
     ]
 }
 
-fn dice_surface(id: i32) -> Node<Msg> {
+fn cube_surface(id: i32) -> Node<Msg> {
     let base_style = s()
         .position_absolute()
         .width(px(150))
