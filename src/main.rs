@@ -23,6 +23,9 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         )
         .style("img", s().box_sizing_content_box())
         .style("*, *:before, *:after", s().box_sizing("inherit"))
+        .activate_init_styles();
+
+    GlobalStyle::default()
         .style("body", s().background_color(rgb(0, 0, 0)))
         .activate_styles();
 
