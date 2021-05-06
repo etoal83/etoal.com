@@ -6,6 +6,7 @@
 use seed::{prelude::*, *};
 use seed_styles::*;
 use etoal_com::hello_cube::hello_cube;
+use etoal_com::theme::*;
 
 const ABOUT: &str = "about";
 
@@ -22,25 +23,6 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         base_url: url.to_base_url(),
         page: Page::init(url),
     }
-}
-
-fn init_global_styles() {
-    GlobalStyle::default()
-        .style(
-            "a,ul,li,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
-            s().font_family("'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif")
-                .color(rgb(217, 217, 217))
-                .webkit_font_smoothing_antialiased(),
-        )
-        .style("img", s().box_sizing_content_box())
-        .style("*, *:before, *:after", s().box_sizing("inherit"))
-        .activate_init_styles();
-}
-
-fn use_themed_styles() {
-    GlobalStyle::default()
-        .style("body", s().background_color(rgb(0, 0, 0)))
-        .activate_styles();
 }
 
 
