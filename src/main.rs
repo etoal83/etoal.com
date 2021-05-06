@@ -14,6 +14,17 @@ const ABOUT: &str = "about";
 // ------ ------
 
 fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
+    init_global_styles();
+    use_themed_styles();
+    
+    orders.subscribe(Msg::UrlChanged);
+    Model {
+        base_url: url.to_base_url(),
+        page: Page::init(url),
+    }
+}
+
+fn init_global_styles() {
     GlobalStyle::default()
         .style(
             "a,ul,li,div,p,h1,h2,h3,h4,li,dd,dt,button,label,input",
@@ -24,16 +35,12 @@ fn init(url: Url, orders: &mut impl Orders<Msg>) -> Model {
         .style("img", s().box_sizing_content_box())
         .style("*, *:before, *:after", s().box_sizing("inherit"))
         .activate_init_styles();
+}
 
+fn use_themed_styles() {
     GlobalStyle::default()
         .style("body", s().background_color(rgb(0, 0, 0)))
         .activate_styles();
-
-    orders.subscribe(Msg::UrlChanged);
-    Model {
-        base_url: url.to_base_url(),
-        page: Page::init(url),
-    }
 }
 
 
