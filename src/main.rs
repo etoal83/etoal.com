@@ -7,6 +7,7 @@ extern crate etoal_com as et;
 
 use seed::{prelude::*, *};
 use seed_styles::*;
+use crate::et::about;
 use crate::et::hello_cube::hello_cube;
 use crate::et::theme::*;
 
@@ -98,12 +99,10 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
         header(&model.base_url),
         match &model.page {
-            Page::Home => div![C!["page-home"],
+            Page::Home => div![C!["page-content"],
                 "I'm Home.",
             ],
-            Page::About => div![C!["page-about"],
-                "About me."
-            ],
+            Page::About => about::view(),
             Page::NotFound => div!["404"],
         },
         hello_cube(),
@@ -111,8 +110,7 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
 }
 
 fn header(base_url: &Url) -> Node<Msg> {
-    div![
-        C!["header"],
+    div![C!["header"],
         h1!["EtoAl.com"],
         ul![
             li![a![
