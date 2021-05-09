@@ -3,10 +3,12 @@
 // but some rules are too "annoying" or are not applicable for your case.)
 #![allow(clippy::wildcard_imports)]
 
+extern crate etoal_com as et;
+
 use seed::{prelude::*, *};
 use seed_styles::*;
-use etoal_com::hello_cube::hello_cube;
-use etoal_com::theme::*;
+use crate::et::hello_cube::hello_cube;
+use crate::et::theme::*;
 
 const ABOUT: &str = "about";
 
