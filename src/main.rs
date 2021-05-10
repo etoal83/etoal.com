@@ -7,6 +7,7 @@ extern crate etoal_com as et;
 
 use seed::{prelude::*, *};
 use seed_styles::*;
+use seed_hooks::*;
 use crate::et::about;
 use crate::et::hello_cube::hello_cube;
 use crate::et::theme::*;
@@ -95,6 +96,7 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 
 // (Remove the line below once your `Model` become more complex.)
 #[allow(clippy::trivially_copy_pass_by_ref)]
+#[topo::nested]
 fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
         header(&model.base_url),
