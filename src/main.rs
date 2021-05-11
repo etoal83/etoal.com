@@ -110,12 +110,12 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
         match &model.page {
             Page::Home => div![C!["page-content"],
                 "I'm Home.",
+                hello_cube(),
             ],
             Page::About => about::view(),
             Page::Works(works_model) => works::view(works_model),
             Page::NotFound => div!["404"],
         },
-        hello_cube(),
     ]
 }
 
