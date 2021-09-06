@@ -10,7 +10,7 @@ use seed_styles::{*, px, rem};
 use seed_hooks::*;
 use crate::et::about;
 use crate::et::contents::works;
-use crate::et::hello_cube::hello_cube;
+// use crate::et::hello_cube::hello_cube;
 use crate::et::theme::*;
 
 const ABOUT: &str = "about";
@@ -110,7 +110,6 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
         match &model.page {
             Page::Home => div![C!["page-content"],
                 "I'm Home.",
-                hello_cube(),
             ],
             Page::About => about::view(),
             Page::Works(works_model) => works::view(works_model),
@@ -143,15 +142,15 @@ fn header(base_url: &Url) -> Node<Msg> {
                     s().padding_x(rem(0.5))
                         .padding_y(rem(0.75))
                         .text_decoration(CssTextDecoration::None),
-                attrs! { At::Href => Urls::new(base_url).home() },
-                "Home",
+                    attrs! { At::Href => Urls::new(base_url).home() },
+                    "Home",
                 ],
                 a![
                     s().padding_x(rem(0.5))
                         .padding_y(rem(0.75))
                         .text_decoration(CssTextDecoration::None),
-                attrs! { At::Href => Urls::new(base_url).about() },
-                "About",
+                        attrs! { At::Href => Urls::new(base_url).about() },
+                    "About",
                 ],
             ]
         ],
