@@ -6,7 +6,7 @@
 extern crate etoal_com as et;
 
 use seed::{prelude::*, *};
-use seed_styles::*;
+use seed_styles::{*, px, rem};
 use seed_hooks::*;
 use crate::et::about;
 use crate::et::contents::works;
@@ -120,17 +120,40 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
 }
 
 fn header(base_url: &Url) -> Node<Msg> {
-    div![C!["header"],
-        h1!["EtoAl.com"],
-        ul![
-            li![a![
+    nav![
+        id!["appNav"],
+        div![
+            C!["nav-container"],
+            s().display(CssDisplay::Flex)
+                .align_items(CssAlignItems::Center)
+                .justify_content("space-between")
+                .padding_x(px(10)),
+            a![
+                C!["nav-logo"],
+                s().font_size(rem(2))
+                    .font_weight(CssFontWeight::Bold)
+                    .text_decoration(CssTextDecoration::None)
+                    .padding_y(rem(0.5)),
+                attrs! { At::Href => Urls::new(base_url).home() },
+                "Etoarium",
+            ],
+            div![
+                C!["nav-menu"],
+                a![
+                    s().padding_x(rem(0.5))
+                        .padding_y(rem(0.75))
+                        .text_decoration(CssTextDecoration::None),
                 attrs! { At::Href => Urls::new(base_url).home() },
                 "Home",
-            ]],
-            li![a![
+                ],
+                a![
+                    s().padding_x(rem(0.5))
+                        .padding_y(rem(0.75))
+                        .text_decoration(CssTextDecoration::None),
                 attrs! { At::Href => Urls::new(base_url).about() },
                 "About",
-            ]],
+                ],
+            ]
         ],
     ]
 }
