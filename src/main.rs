@@ -109,7 +109,6 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
         header(&model.base_url),
         match &model.page {
             Page::Home => div![C!["page-content"],
-                "I'm Home.",
             ],
             Page::About => about::view(),
             Page::Works(works_model) => works::view(works_model),
@@ -129,26 +128,32 @@ fn header(base_url: &Url) -> Node<Msg> {
                 .padding_x(px(10)),
             a![
                 C!["nav-logo"],
-                s().font_size(rem(2))
-                    .font_weight(CssFontWeight::Bold)
+                s().font_size(rem(2.5))
+                    .font_family("'Futura', 'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif")
+                    .font_weight(CssFontWeight::Lighter)
                     .text_decoration(CssTextDecoration::None)
-                    .padding_y(rem(0.5)),
+                    .padding_y(rem(0.5))
+                    .text_shadow(CssTextShadow::Shadow(px(0), px(0), px(0), "transparent".to_string()))
+                    .transition("text-shadow 0.3s"),
+                s().hover().text_shadow(CssTextShadow::Shadow(px(0), px(0), px(10), "#999".to_string())),
                 attrs! { At::Href => Urls::new(base_url).home() },
                 "Etoarium",
             ],
             div![
                 C!["nav-menu"],
                 a![
-                    s().padding_x(rem(0.5))
+                    s().padding_x(rem(1))
                         .padding_y(rem(0.75))
                         .text_decoration(CssTextDecoration::None),
+                    s().hover().background_color(CssColor::Rgba(255., 255., 255., 0.2)),
                     attrs! { At::Href => Urls::new(base_url).home() },
                     "Home",
                 ],
                 a![
-                    s().padding_x(rem(0.5))
+                    s().padding_x(rem(1))
                         .padding_y(rem(0.75))
                         .text_decoration(CssTextDecoration::None),
+                    s().hover().background_color(CssColor::Rgba(255., 255., 255., 0.2)),
                         attrs! { At::Href => Urls::new(base_url).about() },
                     "About",
                 ],
