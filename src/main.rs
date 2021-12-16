@@ -9,12 +9,10 @@ use seed::{prelude::*, *};
 use seed_styles::{*, px, rem};
 use seed_hooks::*;
 use crate::et::about;
-use crate::et::contents::works;
-// use crate::et::hello_cube::hello_cube;
+use crate::et::hello_cube::hello_cube;
 use crate::et::theme::*;
 
 const ABOUT: &str = "about";
-const WORKS: &str = "works";
 
 // ------ ------
 //     Init
@@ -46,7 +44,6 @@ struct Model {
 enum Page {
     Home,
     About,
-    Works(works::Model),
     NotFound,
 }
 
@@ -55,7 +52,6 @@ impl Page {
         match url.next_path_part() {
             None => Self::Home,
             Some(ABOUT) => Self::About,
-            Some(WORKS) => works::init(url).map_or(Self::NotFound, Self::Works),
             Some(_) => Self::NotFound,
         }
     }
@@ -73,9 +69,6 @@ impl<'a> Urls<'a> {
     }
     pub fn about(self) -> Url {
         self.base_url().add_path_part(ABOUT)
-    }
-    pub fn works(self) -> works::Urls<'a> {
-        works::Urls::new(self.base_url().add_path_part(WORKS))
     }
 }
 
@@ -111,7 +104,6 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
             Page::Home => div![C!["page-content"],
             ],
             Page::About => about::view(),
-            Page::Works(works_model) => works::view(works_model),
             Page::NotFound => div!["404"],
         },
     ]
