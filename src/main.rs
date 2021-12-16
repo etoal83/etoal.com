@@ -1,6 +1,3 @@
-// (Lines like the one below ignore selected Clippy rules
-//  - it's useful when you want to check your code with `cargo make verify`
-// but some rules are too "annoying" or are not applicable for your case.)
 #![allow(clippy::wildcard_imports)]
 
 extern crate etoal_com as et;
@@ -94,8 +91,6 @@ fn update(msg: Msg, model: &mut Model, _: &mut impl Orders<Msg>) {
 //     View
 // ------ ------
 
-// (Remove the line below once your `Model` become more complex.)
-#[allow(clippy::trivially_copy_pass_by_ref)]
 #[topo::nested]
 fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
