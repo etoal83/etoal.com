@@ -3,9 +3,9 @@
 extern crate etoal_com as et;
 
 use seed::{prelude::*, *};
-use seed_styles::{*, px, rem};
+use seed_styles::{*, px, pc, rem};
 use seed_hooks::*;
-use crate::et::about;
+use crate::et::{home, about};
 use crate::et::hello_cube::hello_cube;
 use crate::et::theme::*;
 
@@ -96,8 +96,7 @@ fn view(model: &Model) -> impl IntoNodes<Msg> {
     vec![
         header(&model.base_url),
         match &model.page {
-            Page::Home => div![C!["page-content"],
-            ],
+            Page::Home => home::view(),
             Page::About => about::view(),
             Page::NotFound => div!["404"],
         },
@@ -141,7 +140,7 @@ fn header(base_url: &Url) -> Node<Msg> {
                         .padding_y(rem(0.75))
                         .text_decoration(CssTextDecoration::None),
                     s().hover().background_color(CssColor::Rgba(255., 255., 255., 0.2)),
-                        attrs! { At::Href => Urls::new(base_url).about() },
+                    attrs! { At::Href => Urls::new(base_url).about() },
                     "About",
                 ],
             ]
